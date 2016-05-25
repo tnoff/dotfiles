@@ -1,0 +1,15 @@
+[alias]
+    amend = commit --amend
+    b = branch
+    r = remote -v
+    last = log -1
+    woops = reset --hard HEAD~1
+    s = status
+[user]
+	name = tnoff
+	email = tylernorth18@gmail.com
+[core]
+	editor = vim
+	filemode = false
+[gitreview]
+	username = tnoff

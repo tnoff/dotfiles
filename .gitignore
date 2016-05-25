@@ -1,0 +1,9 @@
+*
+!.gitignore
+!.bashrc
+!.custom-scripts/im-an-adult.pl
+!.custom-scripts/check-duplicates.pl
+!.custom-scripts/youtube
+!.gitconfig
+!.pylintrc
+!.vimrc
