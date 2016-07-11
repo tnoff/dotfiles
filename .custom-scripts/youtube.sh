@@ -2,11 +2,9 @@
 
 # Download youtube files and place them in the appropriate folder
 
-DEFAULT_MEDIA_PATH="/home/tnorth/Media"
+DEFAULT_MEDIA_PATH="/home/tynorth/Media"
 DEFAULT_MUSIC_PATH="${DEFAULT_MEDIA_PATH}/Music"
 DEFAULT_VIDEO_PATH="${DEFAULT_MEDIA_PATH}/Videos"
-
-DEFAULT_FILE_ENDING=".mp4"
 
 echo "Enter youtube url"
 read YOUTUBE_URL
@@ -24,13 +22,12 @@ if [ -z "${MEDIA_TYPE}" ]; then
     exit 1
 fi
 
-if [ "${MEDIA_TYPE}" -ne "v" ] || [ "${MEDIA_TYPE}" -ne "m" ]; then
+if [ "${MEDIA_TYPE}" != "v" ] && [ "${MEDIA_TYPE}" != "m" ]; then
     echo "Invalid media type, must be [v] or [m]"
     exit 1
 fi
 
-
-if [ "${MEDIA_TYPE}" -eq "m" ]; then
+if [ "${MEDIA_TYPE}" == "m" ]; then
 
     echo "Enter song name"
     read SONG_NAME
@@ -44,25 +41,21 @@ if [ "${MEDIA_TYPE}" -eq "m" ]; then
     read ARTIST_NAME
 
     if [ -z "${ARTIST_NAME}" ]; then
-        DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${SONG_NAME}${DEFAULT_FILE_ENDING}"
-        youtube-dl -f best --audio-quality 0 -x -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
-        audio-tool tags reset --title "${SONG_NAME}" "${DOWNLOAD_PATH}"
+        DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${SONG_NAME}.mp4"
     else
         echo "Enter album name (if None press enter)"
         read ALBUM_NAME
         if [ -z "${ALBUM_NAME}" ]; then
-            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${SONG_NAME}${DEFAULT_FILE_ENDING}"
-            youtube-dl -f best --audio-quality 0 -x -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
-            audio-tool tags reset --title "${SONG_NAME}" --artist "${ARTIST_NAME}" --performer "${ARTIST_NAME}" "${DOWNLOAD_PATH}"
+            mkdir -p "${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}"
+            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${SONG_NAME}.mp4"
         else
-            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}/${SONG_NAME}"
-            youtube-dl -f best --audio-quality 0 -x -o "${DOWNLOAD_PATH}${DEFAULT_FILE_ENDING}" "${YOUTUBE_URL}"
-            audio-tool tags reset --title "${SONG_NAME}" --artist "${ARTIST_NAME}" --performer "${ARTIST_NAME}" --album "${ALBUM_NAME}" "${DOWNLOAD_PATH}"
+            mkdir -p "${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
+            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}/${SONG_NAME}.mp4"
         fi
     fi
 fi
 
-if [ "$MEDIA_TYPE}" -eq "v" ]; then
+if [ "$MEDIA_TYPE}" == "v" ]; then
 
     echo "Enter video name"
     read VIDEO_NAME
@@ -72,6 +65,6 @@ if [ "$MEDIA_TYPE}" -eq "v" ]; then
         exit 1
     fi
     
-    DOWNLOAD_PATH="${DEFAULT_VIDEO_PATH}/${VIDEO_NAME}/${DEFAULT_FILE_ENDING}"
-    youtube-dl -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
+    DOWNLOAD_PATH="${DEFAULT_VIDEO_PATH}/${VIDEO_NAME}.mp4"
 fi
+youtube-dl -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
