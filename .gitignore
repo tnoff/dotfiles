@@ -3,6 +3,7 @@
 !.bashrc
 !.custom-scripts/im-an-adult.pl
 !.custom-scripts/check-duplicates.pl
+!.custom-scripts/ufc-vidoes.py
 !.custom-scripts/youtube.sh
 !.gitconfig
 !.pylintrc
