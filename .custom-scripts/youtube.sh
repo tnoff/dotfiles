@@ -2,7 +2,7 @@
 
 # Download youtube files and place them in the appropriate folder
 
-DEFAULT_MEDIA_PATH="/home/tynorth/Media"
+DEFAULT_MEDIA_PATH="/home/tnorth/Media"
 DEFAULT_MUSIC_PATH="${DEFAULT_MEDIA_PATH}/Music"
 DEFAULT_VIDEO_PATH="${DEFAULT_MEDIA_PATH}/Videos"
 
