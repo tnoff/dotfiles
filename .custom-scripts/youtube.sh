@@ -53,9 +53,11 @@ if [ "${MEDIA_TYPE}" == "m" ]; then
             DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}/${SONG_NAME}.mp4"
         fi
     fi
+    youtube-dl -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
+    exit 0
 fi
 
-if [ "$MEDIA_TYPE}" == "v" ]; then
+if [ "${MEDIA_TYPE}" == "v" ]; then
 
     echo "Enter video name"
     read VIDEO_NAME
@@ -66,5 +68,7 @@ if [ "$MEDIA_TYPE}" == "v" ]; then
     fi
     
     DOWNLOAD_PATH="${DEFAULT_VIDEO_PATH}/${VIDEO_NAME}.mp4"
+    youtube-dl -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
+    exit 0
 fi
-youtube-dl -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
+exit 1
