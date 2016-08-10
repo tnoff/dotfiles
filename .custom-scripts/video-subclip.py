@@ -15,15 +15,19 @@ def parse():
     p.add_argument('-o', '--output', help='Name of new file')
     return p.parse_args()
 
-args = parse()
+def main():
+    args = parse()
 
-clip = vfc(args.video_file)
+    clip = vfc(args.video_file)
 
-if args.end is None:
-    sub = clip.subclip(args.start)
-else:
-    sub = clip.subclip(args.start, args.end)
+    if args.end is None:
+        sub = clip.subclip(args.start)
+    else:
+        sub = clip.subclip(args.start, args.end)
 
-if args.output is None:
-    args.output = '%s-edited.mp4' % os.path.splitext(args.video_file)[0]
-sub.write_videofile(args.output)
+    if args.output is None:
+        args.output = '%s-edited.mp4' % os.path.splitext(args.video_file)[0]
+    sub.write_videofile(args.output)
+
+if __name__ == '__main__':
+    main()
