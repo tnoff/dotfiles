@@ -29,45 +29,29 @@ fi
 
 if [ "${MEDIA_TYPE}" == "m" ]; then
 
-    echo "Enter song name"
-    read SONG_NAME
-
-    if [ -z "${SONG_NAME}" ]; then
-        echo "Song name must be entered"
-        exit 1
-    fi
-
     echo "Enter artist name (if None press enter)"
     read ARTIST_NAME
 
     if [ -z "${ARTIST_NAME}" ]; then
-        DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${SONG_NAME}.mp4"
+        DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}"
     else
         echo "Enter album name (if None press enter)"
         read ALBUM_NAME
         if [ -z "${ALBUM_NAME}" ]; then
             mkdir -p "${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}"
-            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${SONG_NAME}.mp4"
+            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}"
         else
             mkdir -p "${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
-            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}/${SONG_NAME}.mp4"
+            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
         fi
     fi
-    youtube-dl -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
+    youtube-dl -f best --audio-quality 0 -x -o "${DOWNLOAD_PATH}/%(title)s.%(ext)s" "${YOUTUBE_URL}"
     exit 0
 fi
 
 if [ "${MEDIA_TYPE}" == "v" ]; then
 
-    echo "Enter video name"
-    read VIDEO_NAME
-
-    if [ -z "${VIDEO_NAME}" ]; then
-        echo "Video name must be entered"
-        exit 1
-    fi
-    
-    DOWNLOAD_PATH="${DEFAULT_VIDEO_PATH}/${VIDEO_NAME}.mp4"
+    DOWNLOAD_PATH="${DEFAULT_VIDEO_PATH}/%(title)s.%(ext)s"
     youtube-dl -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
     exit 0
 fi
