@@ -175,5 +175,8 @@ if [ -n "$DISPLAY" ]; then
       xset b off
 fi
 
+# use master python venv by default
+envs master
+
 # Source twilio stuff
 source ~/.twilio_env.sh
