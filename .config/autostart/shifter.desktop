@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/tnorth/.custom-scripts/shifter.py &
+Hidden=false
+X-GNOME=Autostart-enabled=true
+Name[en_US]=shifter
+Name=shifter
+Commen[en_US]=Rotate wallpaper
+Comment=Rotate wallpaper
