@@ -2,10 +2,18 @@
 
 # Download youtube files and place them in the appropriate folder
 
-DEFAULT_MEDIA_PATH="/home/tnorth/Media"
+# Set default paths for file downloads
+DEFAULT_MEDIA_PATH="${HOME}/Media"
 DEFAULT_MUSIC_PATH="${DEFAULT_MEDIA_PATH}/Music"
 DEFAULT_VIDEO_PATH="${DEFAULT_MEDIA_PATH}/Videos"
 
+# Make sure all needed dirs exist
+mkdir -p "${DEFAULT_MEDIA_PATH}"
+mkdir -p "${DEFAULT_MUSIC_PATH}"
+mkdir -p "${DEFAULT_VIDEO_PATH}"
+
+
+# Get youtube url, make sure its not blank
 echo "Enter youtube url"
 read YOUTUBE_URL
 
@@ -14,6 +22,10 @@ if [ -z "${YOUTUBE_URL}" ]; then
     exit 1
 fi
 
+
+# Enter media type
+# music - will only download audio if possible
+# video - download the whole video
 echo "Enter Media Type: (m)usic of (v)ideo"
 read MEDIA_TYPE
 
@@ -27,6 +39,9 @@ if [ "${MEDIA_TYPE}" != "v" ] && [ "${MEDIA_TYPE}" != "m" ]; then
     exit 1
 fi
 
+# If music, also ask for artist and then album.
+# if given, dirs will be created to place
+# file in the appropriate place.
 if [ "${MEDIA_TYPE}" == "m" ]; then
 
     echo "Enter artist name (if None press enter)"
@@ -45,6 +60,9 @@ if [ "${MEDIA_TYPE}" == "m" ]; then
             DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
         fi
     fi
+    # download best possible format, use "-x" flag for just audio
+    # download path will include name of the online video file, and then whatever extension
+    # youtube-dl wants to use
     youtube-dl -f best --audio-quality 0 -x -o "${DOWNLOAD_PATH}/%(title)s.%(ext)s" "${YOUTUBE_URL}"
     exit 0
 fi
