@@ -24,7 +24,10 @@ def main():
         path, ext = os.path.splitext(name)
         print 'Converting file %s from media type %s to %s' % (path, ext, media) 
         clip = vfc(name)
-        clip.write_videofile('%s%s' % (path, media))
+        if media == '.gif':
+            clip.write_gif('%s%s' % (path, media))
+        else:
+            clip.write_videofile('%s%s' % (path, media))
 
 if __name__ == '__main__':
     main()
