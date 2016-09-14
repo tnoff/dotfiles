@@ -180,3 +180,9 @@ function pretty-script()
 {
     cat $1 | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b > $1-pretty
 }
+
+# no stupid tab sound
+# also needs change to /etc/inputrc http://www.cyberciti.biz/faq/how-to-linux-disable-or-turn-off-beep-sound-for-terminal/
+if [ -n "$DISPLAY" ]; then
+      xset b off
+fi
