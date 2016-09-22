@@ -3,14 +3,10 @@
 # Download youtube files and place them in the appropriate folder
 
 # Set default paths for file downloads
-DEFAULT_MEDIA_PATH="${HOME}/Media"
-DEFAULT_MUSIC_PATH="${DEFAULT_MEDIA_PATH}/Music"
-DEFAULT_VIDEO_PATH="${DEFAULT_MEDIA_PATH}/Videos"
+DEFAULT_MEDIA_PATH="${HOME}/Downloads"
 
 # Make sure all needed dirs exist
 mkdir -p "${DEFAULT_MEDIA_PATH}"
-mkdir -p "${DEFAULT_MUSIC_PATH}"
-mkdir -p "${DEFAULT_VIDEO_PATH}"
 
 
 # Get youtube url, make sure its not blank
@@ -48,16 +44,16 @@ if [ "${MEDIA_TYPE}" == "m" ]; then
     read ARTIST_NAME
 
     if [ -z "${ARTIST_NAME}" ]; then
-        DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}"
+        DOWNLOAD_PATH="${DEFAULT_MEDIA_PATH}"
     else
         echo "Enter album name (if None press enter)"
         read ALBUM_NAME
         if [ -z "${ALBUM_NAME}" ]; then
-            mkdir -p "${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}"
-            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}"
+            mkdir -p "${DEFAULT_MEDIA_PATH}/${ARTIST_NAME}"
+            DOWNLOAD_PATH="${DEFAULT_MEDIA_PATH}/${ARTIST_NAME}"
         else
-            mkdir -p "${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
-            DOWNLOAD_PATH="${DEFAULT_MUSIC_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
+            mkdir -p "${DEFAULT_MEDIA_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
+            DOWNLOAD_PATH="${DEFAULT_MEDIA_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
         fi
     fi
     # download best possible format, use "-x" flag for just audio
@@ -69,7 +65,7 @@ fi
 
 if [ "${MEDIA_TYPE}" == "v" ]; then
 
-    DOWNLOAD_PATH="${DEFAULT_VIDEO_PATH}/%(title)s.%(ext)s"
+    DOWNLOAD_PATH="${DEFAULT_MEDIA_PATH}/%(title)s.%(ext)s"
     youtube-dl -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
     exit 0
 fi
