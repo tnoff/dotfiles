@@ -1,7 +1,8 @@
 #!/bin/bash
-# input: backup-pictures.sh <picture-dir> <picture-backup-dir>
+# input: backup-pictures.sh [<picture-dir>] [<picture-backup-dir>]
+# picture-dir : Directory with files to backup
+# picture-backup-dir : Directory to place backup pictures
 
-# allow command line input, not neeeded
 
 picture_dir="$HOME/Pictures"
 backup_picture_dir="$HOME/Pictures-Backups"
@@ -30,8 +31,8 @@ do
     mkdir -p "${backup_dir_full}"
 done
 
-echo "Starting picture stuff $picture_dir"
-find $picture_dir -type f -name "*.jpg" -print0 | while IFS='' read -r -d '' picture;
+echo "Starting picture stuff ${picture_dir}"
+find ${picture_dir} -type f -name "*.jpg" -print0 | while IFS='' read -r -d '' picture;
 do
     relative=$backup_picture_dir${picture#$picture_dir}
     backup_name=$(echo "${relative}" | sed -r 's/.jpg$/.lep/')
