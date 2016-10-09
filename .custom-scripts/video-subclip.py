@@ -21,9 +21,9 @@ def main():
     clip = vfc(args.video_file)
 
     if args.end is None:
-        sub = clip.subclip(args.start)
+        sub = clip.subclip(t_start=args.start)
     else:
-        sub = clip.subclip(args.start, args.end)
+        sub = clip.subclip(t_start=args.start, t_end=args.end)
 
     if args.output is None:
         args.output = '%s-edited.mp4' % os.path.splitext(args.video_file)[0]
