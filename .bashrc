@@ -111,8 +111,6 @@ export PS1="\[\e[00;30m\]\W>\[\e[0m\]"
 
 alias gtfo='sudo poweroff'
 alias fuck-trailing-whitespaces='echo ":%s/\s\+$//" | pbcopy'
-alias pip-update-all="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
-alias show-all-files='find . -type f -follow -print'
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias purge-pyc='find . -name "*.pyc" -exec rm -rf {} \;'
@@ -122,25 +120,6 @@ alias list-file-types='find . -type f | perl -ne '"'"'print $1 if m/\.([^.\/]+)$
 #Add custom scripts
 PATH=${PATH}:~/.custom-scripts/
 export PATH
-
-function update-system()
-{
-    sudo apt-get update
-    sudo apt-get -y upgrade
-    sudo apt-get autoremove
-}
-
-function who-done-git()
-{
-    git ls-files | xargs -n1 -d'\n' -i git blame {} | perl -n -e '/\s\((.*?)\s[0-9]{4}/ && print "$1\n"' | sort -f | uniq -c -w3 | sort -r
-}
-function build-package()
-{
-    arg="$1"
-    package="${arg%/*}"
-    pip uninstall -y "$package"
-    pip install "$arg"
-}
 
 function envs()
 {
