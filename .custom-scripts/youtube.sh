@@ -43,19 +43,6 @@ if [ "${MEDIA_TYPE}" == "m" ]; then
     echo "Enter artist name (if None press enter)"
     read ARTIST_NAME
 
-    if [ -z "${ARTIST_NAME}" ]; then
-        DOWNLOAD_PATH="${DEFAULT_MEDIA_PATH}"
-    else
-        echo "Enter album name (if None press enter)"
-        read ALBUM_NAME
-        if [ -z "${ALBUM_NAME}" ]; then
-            mkdir -p "${DEFAULT_MEDIA_PATH}/${ARTIST_NAME}"
-            DOWNLOAD_PATH="${DEFAULT_MEDIA_PATH}/${ARTIST_NAME}"
-        else
-            mkdir -p "${DEFAULT_MEDIA_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
-            DOWNLOAD_PATH="${DEFAULT_MEDIA_PATH}/${ARTIST_NAME}/${ALBUM_NAME}"
-        fi
-    fi
     # download best possible format, use "-x" flag for just audio
     # download path will include name of the online video file, and then whatever extension
     # youtube-dl wants to use
