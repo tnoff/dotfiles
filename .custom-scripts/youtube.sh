@@ -40,13 +40,10 @@ fi
 # file in the appropriate place.
 if [ "${MEDIA_TYPE}" == "m" ]; then
 
-    echo "Enter artist name (if None press enter)"
-    read ARTIST_NAME
-
     # download best possible format, use "-x" flag for just audio
     # download path will include name of the online video file, and then whatever extension
     # youtube-dl wants to use
-    youtube-dl -f best --audio-quality 0 -x -o "${DOWNLOAD_PATH}/%(title)s.%(ext)s" "${YOUTUBE_URL}"
+    youtube-dl -f best --audio-quality 0 -x -o "${DEFAULT_MEDIA_PATH}/%(title)s.%(ext)s" "${YOUTUBE_URL}"
     exit 0
 fi
 
