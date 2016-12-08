@@ -1,23 +1,49 @@
 #!/usr/bin/env python
-
+import logging
+from logging.handlers import RotatingFileHandler
 import os
 import random
 import time
 
-def main():
-    home_directory = os.path.expanduser('~')
-    picture_directory = os.path.join(home_directory, 'Pictures', 'Wallpapers')
-    sleep_seconds = 300
+HOME_DIRECTORY = os.path.expanduser('~')
+PICTURE_DIRECTORY = os.path.join(HOME_DIRECTORY, 'Pictures', 'Wallpapers')
+LOG_FILE = os.path.join(HOME_DIRECTORY, '.shifter_log')
+WAIT_INTERVAL = 300
 
-    files = os.listdir(picture_directory)
+def setup_logger():
+    logger = logging.getLogger(__name__)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s',
+                                  datefmt='%Y-%m-%d %H:%M:%S')
+    logger.setLevel(logging.DEBUG)
+    fh = RotatingFileHandler(LOG_FILE,
+                             backupCount=1,
+                             maxBytes=((2 ** 10) * 100),)
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+    return logger
+
+def reset_files():
+    return os.listdir(PICTURE_DIRECTORY)
+
+def main():
+    files = reset_files()
+    log = setup_logger()
     while True:
         if len(files) == 0:
-            files = os.listdir(picture_directory)
+            log.warning("No more files left, resetting file list")
+            files = reset_files()
         for _ in range(100):
             random.shuffle(files)
-        file_name = os.path.join(picture_directory, files.pop(0))
+        file_name = os.path.join(PICTURE_DIRECTORY, files.pop(0))
+        # add condition to check if file doesnt exist
+        if not os.path.isfile(file_name):
+            log.error("Unable to find file:%s, resetting file list", file_name)
+            files = reset_files()
+            continue
+        log.debug("Changing background to file name:%s", file_name)
         os.system('gsettings set org.gnome.desktop.background picture-uri "file:///%s"' % file_name)
-        time.sleep(sleep_seconds)
+        time.sleep(WAIT_INTERVAL)
 
 if __name__ == '__main__':
     main()
