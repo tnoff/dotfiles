@@ -24,7 +24,10 @@ def setup_logger():
     return logger
 
 def reset_files():
-    return os.listdir(PICTURE_DIRECTORY)
+    files = os.listdir(PICTURE_DIRECTORY)
+    for _ in range(len(files) * 2):
+        random.shuffle(files)
+    return files
 
 def main():
     files = reset_files()
@@ -33,8 +36,6 @@ def main():
         if len(files) == 0:
             log.warning("No more files left, resetting file list")
             files = reset_files()
-        for _ in range(100):
-            random.shuffle(files)
         file_name = os.path.join(PICTURE_DIRECTORY, files.pop(0))
         # add condition to check if file doesnt exist
         if not os.path.isfile(file_name):
