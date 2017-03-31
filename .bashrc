@@ -160,6 +160,15 @@ function pretty-script()
     cat $1 | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b > $1-pretty
 }
 
+function shrink-video()
+{
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Need two arguments, input and output files"
+    fi
+    avconv -i "$1" -vcodec libx264 -acodec libmp3lame -ac 2 "$2"
+}
+
+
 # no stupid tab sound
 # also needs change to /etc/inputrc http://www.cyberciti.biz/faq/how-to-linux-disable-or-turn-off-beep-sound-for-terminal/
 if [ -n "$DISPLAY" ]; then
