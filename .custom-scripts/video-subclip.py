@@ -10,8 +10,8 @@ from moviepy.editor import VideoFileClip as vfc
 def parse():
     p = argparse.ArgumentParser(description='Create a video subclip from a video file')
     p.add_argument('video_file', help='Path to video file')
-    p.add_argument('-s', '--start', type=int, default=0, help='Time to start subclip')
-    p.add_argument('-e', '--end', type=int, help='Time to end subclip')
+    p.add_argument('-s', '--start', help='Time to start subclip')
+    p.add_argument('-e', '--end', help='Time to end subclip')
     p.add_argument('-o', '--output', help='Name of new file')
     return p.parse_args()
 
@@ -20,13 +20,11 @@ def main():
 
     clip = vfc(args.video_file)
 
-    if args.end is None:
-        sub = clip.subclip(t_start=args.start)
-    else:
-        sub = clip.subclip(t_start=args.start, t_end=args.end)
+    sub = clip.subclip(t_start=args.start, t_end=args.end)
 
     if args.output is None:
-        args.output = '%s-edited.mp4' % os.path.splitext(args.video_file)[0]
+        basename, _ = os.path.splitext(args.video_file)
+        args.output = '%s-edited.mp4' % basename
     sub.write_videofile(args.output)
 
 if __name__ == '__main__':
