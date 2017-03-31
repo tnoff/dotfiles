@@ -1,56 +1,76 @@
 #!/usr/bin/env python
+# Use tracks file to name files after split
+# File format:
+# <track-name> <time-start>
+
+# time in [<hour>:]<minute>:<second>
+
 import argparse
-import sys
 
 from moviepy.editor import AudioFileClip
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Strip audio files into seperate subclips')
     parser.add_argument('audio_file', help='Path to audio file')
-    parser.add_argument('subclip', nargs='+',
-                        help='Time of track start <minute>:<second> format'\
-                             ' DO NOT INCLUDE 0:0 START')
-    parser.add_argument('--output-index', type=int, default=1,
-                        help='Start output index as X')
+    parser.add_argument('track_info', help='Track file to use')
     return parser.parse_args()
 
-def write_to_mediafile(subclip, output_index, audio_file_name):
-    # this shit does assume less than 100, but downloading that much
-    # seems extremely fucking unlikely right meow
-    if output_index < 10:
-        output_index_string = '0%s' % output_index
-    else:
-        output_index_string = '%s' % output_index
-    subclip.write_audiofile('%s-%s' % (output_index_string, audio_file_name))
+def get_number_digits(number):
+    count = 1
+    num = 10
+    while number > num:
+        count += 1
+        num *= 10
+    return count
+
+def get_time(timestamp):
+    total = 0
+    seconds = 1
+    for t in timestamp.split(':')[::-1]:
+        total += (int(t) * seconds)
+        seconds *= 60
+    return total
 
 def main():
     args = parse_args()
-
-    output_index = args.output_index
     audio_clip = AudioFileClip(args.audio_file)
 
-    start_at = 0
+    with open(args.track_info, 'r') as read:
+        data = read.read()
+        data = data.rstrip('\n')
 
-    for sub in args.subclip:
-        tiago_splitter = sub.split(':')
+    track_data = []
+    for line in data.split('\n'):
+        # Split by space, assume time is last bit
+        split = line.split(' ')
+        # Make sure no trailing whitespaces, or other weirdness
+        split = [i for i in split if i != '']
+        time = split[-1]
+        # assume name is other part of split
+        name = ' '.join(i for i in split[:-1])
+        track_data.append((name, time))
+
+    number_tracks = len(track_data)
+    # get number digits, use that for 0 prefix cutoff
+    # for example, 15 tracks, 10 would be cutoff to adding "0" to
+    # .. to start of track names
+    num_digits = get_number_digits(number_tracks)
+    prefix_cutoff = 10 ** (num_digits - 1)
+
+    for (count, track) in enumerate(track_data):
+        # start is time in current track
+        # end is time in next track
+        start = get_time(track[1])
         try:
-            minutes = int(tiago_splitter[0])
-            seconds = int(tiago_splitter[1]) + (minutes * 60)
+            end = get_time(track_data[count + 1][1])
         except IndexError:
-            print 'Invalid subclip value %s' % sub
-            sys.exit(-1)
-        print 'Output index:', output_index, 'Starting second:',\
-               start_at, 'Ending second:', seconds
-        subclip = audio_clip.subclip(start_at, seconds)
-        write_to_mediafile(subclip, output_index,
-                           args.audio_file)
-        start_at = seconds
-        output_index += 1
-    print 'Output index:', output_index, 'Starting second:', start_at
-    subclip = audio_clip.subclip(start_at)
-    write_to_mediafile(subclip, output_index,
-                       args.audio_file)
-    sys.exit(0)
+            end = None
+        # make prefix for filename
+        name = '%s-%s.mp3' % (count + 1, track[0])
+        if (count + 1) < prefix_cutoff:
+            name = '%s%s' % (''.join('0' for _ in range(num_digits - 1)), name)
+        subclip = audio_clip.subclip(t_start=start, t_end=end)
+        subclip.write_audiofile(name)
 
 if __name__ == '__main__':
     main()
