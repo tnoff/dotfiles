@@ -8,6 +8,7 @@
 import argparse
 
 from moviepy.editor import AudioFileClip
+import mutagen
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Strip audio files into seperate subclips')
@@ -71,6 +72,10 @@ def main():
             name = '%s%s' % (''.join('0' for _ in range(num_digits - 1)), name)
         subclip = audio_clip.subclip(t_start=start, t_end=end)
         subclip.write_audiofile(name)
+        tags = mutagen.File(name, easy=True)
+        tags['tracknumber'] = '%s/%s' % (count + 1, number_tracks)
+        tags['title'] = track[0]
+        tags.save()
 
 if __name__ == '__main__':
     main()
