@@ -18,11 +18,12 @@ def parse_args():
 
 def get_number_digits(number):
     count = 1
-    num = 10
-    while number > num:
+    checker = 10
+    while True:
+        if checker > number:
+            return count
         count += 1
-        num *= 10
-    return count
+        checker *= 10
 
 def get_time(timestamp):
     total = 0
