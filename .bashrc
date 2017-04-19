@@ -174,3 +174,6 @@ function shrink-video()
 if [ -n "$DISPLAY" ]; then
       xset b off
 fi
+
+# Source twilio stuff
+source ~/.twilio_env.sh
