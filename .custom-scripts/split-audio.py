@@ -14,6 +14,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Strip audio files into seperate subclips')
     parser.add_argument('audio_file', help='Path to audio file')
     parser.add_argument('track_info', help='Track file to use')
+    parser.add_argument('--encoding', default="utf-8",
+                        help="Encoding used for track info file")
     return parser.parse_args()
 
 def get_number_digits(number):
@@ -49,7 +51,7 @@ def main():
         split = [i for i in split if i != '']
         time = split[-1]
         # assume name is other part of split
-        name = ' '.join(i for i in split[:-1])
+        name = ' '.join(i for i in split[:-1]).decode(args.encoding)
         track_data.append((name, time))
 
     number_tracks = len(track_data)
