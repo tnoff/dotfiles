@@ -12,4 +12,6 @@
 	editor = vim
 	filemode = false
 [gitreview]
-	username = tnoff
+    username = tnoff
+[diff]
+    tool = vimdiff
