@@ -74,7 +74,8 @@ def main():
         if (count + 1) < prefix_cutoff:
             name = '%s%s' % (''.join('0' for _ in range(num_digits - 1)), name)
         subclip = audio_clip.subclip(t_start=start, t_end=end)
-        subclip.write_audiofile(name)
+        file_name = name.replace('/', '_')
+        subclip.write_audiofile(file_name)
         tags = mutagen.File(name, easy=True)
         tags['tracknumber'] = '%s/%s' % (count + 1, number_tracks)
         tags['title'] = track[0]
