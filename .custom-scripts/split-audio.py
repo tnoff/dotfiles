@@ -3,7 +3,7 @@
 # File format:
 # <track-name> <time-start>
 
-# time in [<hour>:]<minute>:<second>
+# time in [<hour>:]<minute>:<second>[,<miliseconds>]
 
 import argparse
 
@@ -28,11 +28,20 @@ def get_number_digits(number):
         checker *= 10
 
 def get_time(timestamp):
+    mili_split = timestamp.split(',')
+    mili_value = None
+    if len(mili_split) > 1:
+        milis = mili_split[-1]
+        mili_digits = len(milis)
+        mili_value = (int(milis) * 1.0) / (10 ** mili_digits)
+        timestamp = mili_split[0]
     total = 0
     seconds = 1
     for t in timestamp.split(':')[::-1]:
         total += (int(t) * seconds)
         seconds *= 60
+    if mili_value is not None:
+        total += mili_value
     return total
 
 def main():
