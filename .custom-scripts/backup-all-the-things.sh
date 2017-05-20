@@ -14,18 +14,18 @@ fi
 destination=`echo "$1" | sed -r 's/\/$//'`
 
 echo "Going to run the following rysnc commands, that cool?"
-echo "rsync -rvauc ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete"
-echo "rsync -rvauc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete"
-echo "rsync -rvauc ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
+echo "rsync -rvc ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete"
+echo "rsync -rvc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete"
+echo "rsync -rv ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
 
 echo "Enter: y/n"
 read response
 
 if [ "${response}" == "y" ] || [ "${response}" == "Y" ]; then
     echo "Running sync on docs"
-    rsync -rvauc ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete
+    rsync -rvc ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete
     echo "Running sync on music"
-    rsync -rvauc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete
+    rsync -rvc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete
     echo "Running sync on videos"
-    rsync -rvauc ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete
+    rsync -rv ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete
 fi
