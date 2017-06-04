@@ -69,6 +69,10 @@ def main():
     # .. to start of track names
     num_digits = get_number_digits(number_tracks)
     prefix_cutoff = 10 ** (num_digits - 1)
+    # Make sure at least two digits used
+    if prefix_cutoff == 1:
+        prefix_cutoff = 10
+        num_digits = 2
 
     for (count, track) in enumerate(track_data):
         # start is time in current track
