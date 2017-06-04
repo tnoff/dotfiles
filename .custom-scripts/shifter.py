@@ -16,8 +16,8 @@ def setup_logger():
                                   datefmt='%Y-%m-%d %H:%M:%S')
     logger.setLevel(logging.DEBUG)
     fh = RotatingFileHandler(LOG_FILE,
-                             backupCount=1,
-                             maxBytes=((2 ** 10) * 100),)
+                             backupCount=0,
+                             maxBytes=((2 ** 10) * 5),)
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
