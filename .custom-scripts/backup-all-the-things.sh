@@ -17,8 +17,8 @@ destination=`echo "$1" | sed -r 's/\/$//'`
 echo "Going to run the following rysnc commands, that cool?"
 echo "rsync -rvc ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete"
 echo "rsync -rvc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete"
-echo "rsync -rv ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
-echo "rsync -rv ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete"
+echo "rsync -rv --ignore-existing ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
+echo "rsync -rv --ignore-existing ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete"
 
 echo "Enter: y/n"
 read response
@@ -35,10 +35,10 @@ if [ "${response}" == "y" ] || [ "${response}" == "Y" ]; then
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "Running sync on videos"
-    rsync -rv ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete
+    rsync -rv --ignore-existing ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "Running sync on pictures"
-    rsync -rv ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete
+    rsync -rv --ignore-existing ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete
 fi
