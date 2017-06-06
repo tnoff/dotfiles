@@ -12,17 +12,17 @@ def parse_args():
     p.add_argument('--call-number', help='Number to call')
     p.add_argument('--twilio-number', help='Twilio Number')
 
-    args = vars(parse_args())
+    args = vars(p.parse_args())
 
     # check if args in env
     if args['account_sid'] is None:
-        args['account_sid'] = os.getenv('twilio_account_sid', None)
+        args['account_sid'] = os.getenv('TWILIO_ACCOUNT_SID', None)
     if args['auth_token'] is None:
-        args['auth_token'] = os.getenv('twilio_auth_token', None)
+        args['auth_token'] = os.getenv('TWILIO_AUTH_TOKEN', None)
     if args['twilio_number'] is None:
-        args['twilio_number'] = os.getenv('twilio_number', None)
+        args['twilio_number'] = os.getenv('TWILIO_PHONE_NUMBER', None)
     if args['call_number'] is None:
-        args['call_number'] = os.getenv('twilio_call_number', None)
+        args['call_number'] = os.getenv('TWILIO_CALL_NUMBER', None)
 
     # check fail conditions
     if args['account_sid'] is None or args['auth_token'] is None:
