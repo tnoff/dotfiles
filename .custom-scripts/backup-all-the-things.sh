@@ -15,30 +15,30 @@ fi
 destination=`echo "$1" | sed -r 's/\/$//'`
 
 echo "Going to run the following rysnc commands, that cool?"
-echo "rsync -rvc --copy-links ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete"
-echo "rsync -rvc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete"
-echo "rsync -rvc ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
-echo "rsync -rvc ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete"
+echo "rsync -rvuc --copy-links ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete"
+echo "rsync -rvuc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete"
+echo "rsync -rvuc ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
+echo "rsync -rvuc ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete"
 
 echo "Enter: y/n"
 read response
 
 if [ "${response}" == "y" ] || [ "${response}" == "Y" ]; then
     echo "Running sync on docs"
-    rsync -rvc --copy-links ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete
+    rsync -rvuc --copy-links ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "Running sync on music"
-    rsync -rvc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete
+    rsync -rvuc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "Running sync on videos"
-    rsync -rvc ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete
+    rsync -rvuc ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "Running sync on pictures"
-    rsync -rvc ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete
+    rsync -rvuc ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete
 fi
