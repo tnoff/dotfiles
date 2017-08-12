@@ -18,9 +18,9 @@ destination=`echo "$1" | sed -r 's/\/$//'`
 
 echo "Will run the following rysnc commands"
 docs_sync="rsync -rvputogcL ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete"
-music_sync="rsync -rvuptog ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete"
-pic_sync="rsync -rvuptog ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete"
-video_sync="rsync -rvuptog ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
+music_sync="rsync -rvuptogc ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete"
+pic_sync="rsync -rvuptogc ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete"
+video_sync="rsync -rvuptogc ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
 echo "${docs_sync}"
 echo "${music_sync}"
 echo "${pic_sync}"
