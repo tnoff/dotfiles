@@ -118,6 +118,8 @@ function shrink-video()
 # Source twilio stuff
 source ~/.twilio_env.sh
 
+alias minecraft='java -jar ~/.minecraft/launcher.jar'
+
 # Set up venv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 envs master
