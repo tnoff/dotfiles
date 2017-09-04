@@ -2,13 +2,23 @@
 # Use tracks file to name files after split
 # File format:
 # <track-name> <time-start>
-
 # time in [<hour>:]<minute>:<second>[,<miliseconds>]
 
+# OPTIONAL
+# First line in track info can contain artist,album,date info
+# info in "INFO: <artist> /// <album> /// <date>"
+
 import argparse
+import re
+import sys
 
 from moviepy.editor import AudioFileClip
 import mutagen
+
+
+LINE_REGEX = '^(.*) ([0-9:,]+)$'
+TIME_REGEX = '([0-9]+:)?([0-9]+):([0-9]+)(,[0-9]+)?$'
+INFO_REGEX = '^INFO: (.*) /// (.*) /// (.*)'
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Strip audio files into seperate subclips')
@@ -28,20 +38,20 @@ def get_number_digits(number):
         checker *= 10
 
 def get_time(timestamp):
-    mili_split = timestamp.split(',')
-    mili_value = None
-    if len(mili_split) > 1:
-        milis = mili_split[-1]
-        mili_digits = len(milis)
-        mili_value = (int(milis) * 1.0) / (10 ** mili_digits)
-        timestamp = mili_split[0]
+    time_group = re.search(TIME_REGEX, timestamp)
+    hour = time_group.group(1)
+    minute = time_group.group(2)
+    second = time_group.group(3)
+    milisecond = time_group.group(4)
     total = 0
-    seconds = 1
-    for t in timestamp.split(':')[::-1]:
-        total += (int(t) * seconds)
-        seconds *= 60
-    if mili_value is not None:
-        total += mili_value
+    if hour:
+        total += (int(hour.replace(':', '')) * 60 * 60)
+    total += (int(minute) * 60)
+    total += int(second)
+    if milisecond:
+        mili = int(milisecond.replace(',', ''))
+        digits = get_number_digits(mili)
+        total += (mili / (10.0 ** digits))
     return total
 
 def main():
@@ -52,15 +62,25 @@ def main():
         data = read.read()
         data = data.rstrip('\n')
 
+    base_tags = {}
+
+    data_lines = data.split('\n')
+    start_count = 0
+    if data_lines[0].startswith('INFO'):
+        info = re.search(INFO_REGEX, data_lines[0])
+        base_tags['artist'] = info.group(1)
+        base_tags['album'] = info.group(2)
+        base_tags['date'] = info.group(3)
+        start_count += 1
+
     track_data = []
-    for line in data.split('\n'):
-        # Split by space, assume time is last bit
-        split = line.split(' ')
-        # Make sure no trailing whitespaces, or other weirdness
-        split = [i for i in split if i != '']
-        time = split[-1]
-        # assume name is other part of split
-        name = ' '.join(i for i in split[:-1]).decode(args.encoding)
+    for line in data_lines[start_count:]:
+        line = line.strip(' ')
+        groups = re.search(LINE_REGEX, line)
+        if not groups:
+            sys.exit("Invalid line %s" % line)
+        time = groups.group(2)
+        name = groups.group(1).decode(args.encoding)
         track_data.append((name, time))
 
     number_tracks = len(track_data)
@@ -73,6 +93,7 @@ def main():
     if prefix_cutoff == 1:
         prefix_cutoff = 10
         num_digits = 2
+
 
     for (count, track) in enumerate(track_data):
         # start is time in current track
@@ -89,9 +110,15 @@ def main():
         subclip = audio_clip.subclip(t_start=start, t_end=end)
         file_name = name.replace('/', '_')
         subclip.write_audiofile(file_name)
+
         tags = mutagen.File(file_name, easy=True)
         tags['tracknumber'] = '%s/%s' % (count + 1, number_tracks)
         tags['title'] = track[0]
+        if base_tags:
+            tags['artist'] = base_tags['artist']
+            tags['albumartist'] = base_tags['artist']
+            tags['album'] = base_tags['album']
+            tags['date'] = base_tags['date']
         tags.save()
 
 if __name__ == '__main__':
