@@ -120,6 +120,8 @@ source ~/.twilio_env.sh
 
 alias minecraft='java -jar ~/.minecraft/launcher.jar'
 
+alias redscreen='redshift -v -t 4500:3750 &'
+
 # Set up venv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 envs master
