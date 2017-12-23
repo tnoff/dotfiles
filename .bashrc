@@ -55,8 +55,7 @@ fi
 #Make prompt all nice
 export PS1="\W>\[$(tput sgr0)\]"
 
-alias gtfo='sudo poweroff'
-alias fuck-trailing-whitespaces='echo ":%s/\s\+$//" | pbcopy'
+alias remove-trailing-whitespaces='echo ":%s/\s\+$//" | pbcopy'
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias purge-pyc='find . -name "*.pyc" -exec rm -rf {} \;'
@@ -96,29 +95,15 @@ function envs()
     fi
     source ~/.envs/$1/bin/activate
 }
-function watch-me()
-{
-    datetime=$(date -u | sed 's/ /-/g' )
-    script $1.$datetime
-}
+
 function pretty-script()
 {
     cat $1 | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b > $1-pretty
 }
 
-function shrink-video()
-{
-    if [ -z "$1" ] || [ -z "$2" ]; then
-        echo "Need two arguments, input and output files"
-    fi
-    avconv -i "$1" -vcodec libx264 -acodec libmp3lame -ac 2 "$2"
-}
-
 
 # Source twilio stuff
 source ~/.twilio_env.sh
-
-alias minecraft='java -jar ~/.minecraft/launcher.jar'
 
 alias redscreen='redshift -v -t 4500:3750 &'
 
