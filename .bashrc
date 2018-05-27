@@ -107,6 +107,9 @@ source ~/.twilio_env.sh
 
 alias redscreen='redshift -v -t 4500:3750 &'
 
+# Add option to disable caps lock
+alias disable-caps-lock='setxkbmap -option "caps:none"'
+
 # Set up venv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 envs master
