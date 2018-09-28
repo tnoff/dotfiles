@@ -110,6 +110,8 @@ alias redscreen='redshift -v -t 4500:3750 &'
 # Add option to disable caps lock
 alias disable-caps-lock='setxkbmap -option "caps:none"'
 
+alias work-bus='watch -n 15 trip-planner trip show 8'
+
 # Set up venv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 envs master
