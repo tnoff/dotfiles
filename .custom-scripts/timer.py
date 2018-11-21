@@ -6,7 +6,9 @@ import random
 import sys
 import time
 
-PATH = '~/.alarm-sounds'
+
+HOME = os.path.expanduser("~")
+PATH = os.path.join(HOME, '.alarm-sounds')
 
 def parse_args():
     p = argparse.ArgumentParser(description="Timer")
