@@ -33,16 +33,21 @@ def get_number_digits(number):
     checker = 10
     while True:
         if checker > number:
-            return count
+            break
         count += 1
         checker *= 10
+    return count
 
 def get_time(timestamp):
     time_group = re.search(TIME_REGEX, timestamp)
-    hour = time_group.group(1)
-    minute = time_group.group(2)
-    second = time_group.group(3)
-    milisecond = time_group.group(4)
+    try:
+        hour = time_group.group(1)
+        minute = time_group.group(2)
+        second = time_group.group(3)
+        milisecond = time_group.group(4)
+    except AttributeError:
+        print "Invalid timestamp:%s" % timestamp
+        sys.exit(1)
     total = 0
     if hour:
         total += (int(hour.replace(':', '')) * 60 * 60)
