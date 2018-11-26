@@ -50,11 +50,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-#Mah edits >:D
-#-------------------
-#Make prompt all nice
+# Custom prompt
 export PS1="\W>\[$(tput sgr0)\]"
 
+
+# Alias
 alias remove-trailing-whitespaces='echo ":%s/\s\+$//" | pbcopy'
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
@@ -62,9 +62,11 @@ alias purge-pyc='find . -name "*.pyc" -exec rm -rf {} \;'
 alias purge-orig='find . -name "*.orig" -exec rm -rf {} \;'
 alias list-file-types='find . -type f | perl -ne '"'"'print $1 if m/\.([^.\/]+)$/'"'"' | sort -u'
 
-#Add custom scripts
+# Add custom scripts to path
 PATH=${PATH}:~/.custom-scripts/
 export PATH
+
+# Function envs
 
 function envs()
 {
@@ -104,13 +106,6 @@ function pretty-script()
 
 # Source twilio stuff
 source ~/.twilio_env.sh
-
-alias redscreen='redshift -v -t 4500:3750 &'
-
-# Add option to disable caps lock
-alias disable-caps-lock='setxkbmap -option "caps:none"'
-
-alias work-bus='watch -n 15 trip-planner trip show 8'
 
 # Set up venv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
