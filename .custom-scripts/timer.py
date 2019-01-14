@@ -22,15 +22,19 @@ def main():
 
     files = ['%s/%s' % (PATH, file_name) for file_name in os.listdir(PATH)]
     file_name = random.choice(files)
-    while True:
-        if total_seconds <= 0:
-            command = 'vlc "%s"' % (file_name)
-            os.system(command)
-            break
-        sys.stdout.write('Time left to wait %sm %ss \r' % (total_seconds / 60, total_seconds % 60))
-        sys.stdout.flush()
-        time.sleep(1)
-        total_seconds -= 1
+    try:
+        while True:
+            if total_seconds <= 0:
+                command = 'vlc "%s"' % (file_name)
+                os.system(command)
+                break
+            sys.stdout.write('Time left to wait %sm %ss \r' % (total_seconds / 60, total_seconds % 60))
+            sys.stdout.flush()
+            time.sleep(1)
+            total_seconds -= 1
+    except KeyboardInterrupt:
+        # Assume user canceled out
+        print 'Exiting early'
 
 if __name__ == '__main__':
     main()
