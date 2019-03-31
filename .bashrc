@@ -98,11 +98,20 @@ function envs()
     source ~/.envs/$1/bin/activate
 }
 
+function image-size()
+{
+    convert $1 -print "Size: %wx%h\n" /dev/null
+}
+
+function download-playlist()
+{
+    youtube-dl --audio-quality 0 -f best -x -o "%(playlist_index)s-%(title)s.%(ext)s" "$1"
+}
+
 function pretty-script()
 {
     cat $1 | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b > $1-pretty
 }
-
 
 # Source twilio stuff
 source ~/.twilio_env.sh
