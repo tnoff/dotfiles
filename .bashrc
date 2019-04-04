@@ -61,6 +61,7 @@ alias pbpaste='xsel --clipboard --output'
 alias purge-pyc='find . -name "*.pyc" -exec rm -rf {} \;'
 alias purge-orig='find . -name "*.orig" -exec rm -rf {} \;'
 alias list-file-types='find . -type f | perl -ne '"'"'print $1 if m/\.([^.\/]+)$/'"'"' | sort -u'
+alias hathor-list='hathor -k id,date,podcast,title -sk date episode list'
 
 # Add custom scripts to path
 PATH=${PATH}:~/.custom-scripts/
