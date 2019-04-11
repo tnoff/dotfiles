@@ -7,7 +7,7 @@ import re
 from hathor.audio import metadata
 import youtube_dl
 
-EXPECTED_REGEX = "^0?(?P<number>[0-9A-Z]+)-(?P<title>.*).mp3"
+EXPECTED_REGEX = "^0?(?P<number>[0-9A-Z]+)([ -])(?P<title>.*).mp3"
 
 def parse_args():
     p = argparse.ArgumentParser(description="Download youtube playlist")
@@ -21,7 +21,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    path = os.path.abspath('.')
+    path = os.path.abspath('~/Downloads')
     if args.artist:
         path = os.path.join(path, args.artist)
 
@@ -54,7 +54,7 @@ def main():
 
 
     # Give user time to fix file names if needed
-    raw_input("Press Enter to continue")
+    input("Press Enter to continue")
 
     # Assume any files in path that end in mp3 are ours
     mp3_files = [file_name for file_name in os.listdir(path) if file_name.endswith('.mp3')]
@@ -80,8 +80,12 @@ def main():
         metadata.tags_update(os.path.join(path, file_name), tags_dict)
 
         if args.picture:
+            print("Updating picture for file:%s" % file_name)
             metadata.picture_update(os.path.join(path, file_name), args.picture)
 
+    # Touch low-quality file
+    with open(os.path.join(path, 'low-quality'), 'a') as writer:
+        pass
 
 if __name__ == '__main__':
     main()
