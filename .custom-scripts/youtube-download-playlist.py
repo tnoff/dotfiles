@@ -21,7 +21,8 @@ def parse_args():
 def main():
     args = parse_args()
 
-    path = os.path.abspath('~/Downloads')
+    path = os.path.expanduser('~')
+    path = os.path.join(path, 'Downloads')
     if args.artist:
         path = os.path.join(path, args.artist)
 
