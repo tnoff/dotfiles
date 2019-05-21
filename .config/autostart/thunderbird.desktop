@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Exec=/usr/bin/thunderbird &
-Hidden=false
-X-GNOME=Autostart-enabled=true
-Name[en_US]=thunderbird
-Name=thunderbird
-Commen[en_US]=Start thunderbird
-Comment=Start thunderbird
