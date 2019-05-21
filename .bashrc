@@ -64,7 +64,7 @@ alias list-file-types='find . -type f | perl -ne '"'"'print $1 if m/\.([^.\/]+)$
 
 # Hathor Alias'
 alias hathor='hathor -s ~/.hathor/settings.conf'
-alias episode-list='hathor -k id,date,podcast,title -sk date episode list'
+alias episode-list='hathor -k date,podcast,title -sk date episode list'
 
 # Add custom scripts to path
 PATH=${PATH}:~/.custom-scripts/
