@@ -44,6 +44,7 @@ def main():
             continue
         log.debug("Changing background to file name:%s", file_name)
         os.system('gsettings set org.gnome.desktop.background picture-uri "file:///%s"' % file_name)
+        os.system('gsettings set org.gnome.desktop.screensaver picture-uri "file:///%s"' % file_name)
         time.sleep(WAIT_INTERVAL)
 
 if __name__ == '__main__':
