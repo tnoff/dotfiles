@@ -46,7 +46,7 @@ def get_time(timestamp):
         second = time_group.group(3)
         milisecond = time_group.group(4)
     except AttributeError:
-        print "Invalid timestamp:%s" % timestamp
+        print("Invalid timestamp:%s" % timestamp)
         sys.exit(1)
     total = 0
     if hour:
@@ -85,7 +85,7 @@ def main():
         if not groups:
             sys.exit("Invalid line %s" % line)
         time = groups.group(2)
-        name = groups.group(1).decode(args.encoding)
+        name = groups.group(1)
         track_data.append((name, time))
 
     number_tracks = len(track_data)
