@@ -20,6 +20,7 @@ PAREN_MATCH = r"^(?P<title>.*) \((?P<featuring>.*)\)"
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Fix artist tags")
+    parser.add_argument("-d", "--dry-run", action="store_true", help="Only do dry run")
     parser.add_argument("file_dir", help="File Dir")
     return parser.parse_args()
 
@@ -36,14 +37,14 @@ def main():
                 tags = metadata.tags_show(full_path)
             except AudioFileException:
                 print("ERROR: Cannot get tags for file", full_path)
-
+                continue
             # Check title for featuring
             try:
                 title = tags['title']
             except KeyError:
                 print("ERROR: No title tag for audio file", full_path)
+                continue
             if "feat." in title.lower() or "featuring" in title.lower():
-                print("Possible bad tag", full_path)
                 possible_bad_files.append(full_path)
 
     # Assume that featuring data within paren ()
@@ -55,9 +56,13 @@ def main():
         matcher = re.match(PAREN_MATCH, title)
         if not matcher:
             print("ERROR: Unable to find matching regex for file", full_path)
-
+            continue
         # Combine featuring to end of album artist
-        artist = '%s %s' % (tags['albumartist'], matcher.group('featuring'))
+        try:
+            artist = '%s %s' % (tags['albumartist'], matcher.group('featuring'))
+        except KeyError:
+            print("ERROR: No albumartist tag", full_path)
+            continue
         # Use stripped title
         title = matcher.group('title')
         new_data[bad_file] = {
@@ -69,11 +74,12 @@ def main():
         print("New title", title)
         print("-------------------------------------------------------------")
 
-    user_input = input("Continue with fixing files?(y/n)")
-    if user_input.lower() == 'y':
-        for path, new_data in new_data.items():
-            print("Updating file", path)
-            metadata.tags_update(path, new_data)
+    if not args.dry_run:
+        user_input = input("Continue with fixing files?(y/n)")
+        if user_input.lower() == 'y':
+            for path, new_data in new_data.items():
+                print("Updating file", path)
+                metadata.tags_update(path, new_data)
 
 if __name__ == '__main__':
     main()
