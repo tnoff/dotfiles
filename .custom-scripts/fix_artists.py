@@ -16,7 +16,7 @@ of the audio file
 The "albumartist" tag should contain the main artist
 '''
 
-PAREN_MATCH = r"^(?P<title>.*) \((?P<featuring>.*)\)"
+FEAT_MATCH = r"^(?P<title>.*) ([\(\[] )?(?P<featuring>[Ff]eat(uring)?(.)? .*)( [\)\]])?"
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Fix artist tags")
@@ -44,6 +44,7 @@ def main():
             except KeyError:
                 print("ERROR: No title tag for audio file", full_path)
                 continue
+            # Check for possible featuring files
             if "feat." in title.lower() or "featuring" in title.lower():
                 possible_bad_files.append(full_path)
 
@@ -53,15 +54,17 @@ def main():
     for bad_file in possible_bad_files:
         tags = metadata.tags_show(bad_file)
         title = tags['title']
-        matcher = re.match(PAREN_MATCH, title)
+
+        matcher = re.match(FEAT_MATCH, title)
+
         if not matcher:
-            print("ERROR: Unable to find matching regex for file", full_path)
+            print("ERROR: Unable to find matching regex for file", bad_file)
             continue
         # Combine featuring to end of album artist
         try:
             artist = '%s %s' % (tags['albumartist'], matcher.group('featuring'))
         except KeyError:
-            print("ERROR: No albumartist tag", full_path)
+            print("ERROR: No albumartist tag", bad_file)
             continue
         # Use stripped title
         title = matcher.group('title')
