@@ -10,7 +10,7 @@ import re
 from hathor.audio import metadata
 from hathor.exc import AudioFileException
 
-FEAT_MATCH = r"^(?P<title>.*) ([\(\[] )?(?P<featuring>[Ff]eat(uring)?(.)? .*)( [\)\]])?"
+FEAT_MATCH = r"^(?P<title>.*[^\[\(]) ([\(\[] ?)?(?P<featuring>[Ff](ea)?t(uring)?(.)? .*[^\]\) ])( [\)\]])?"
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Fix artist tags")
@@ -77,24 +77,27 @@ def check_featured_artists_in_title(log, update_data, full_path, tags):
         return update_data
 
     # Check for possible featuring files
-    if "feat." in title.lower() or "featuring" in title.lower():
-        matcher = re.match(FEAT_MATCH, title)
+    if not ("feat." in title.lower() or "featuring" in title.lower() or "ft." in title.lower()):
+        log.debug("No featuring artist in title found for file:%s", title)
+        return update_data
 
-        if not matcher:
-            log.warning("Unable to find matching regex for file:%s", full_path)
-            return update_data
-        # Combine featuring to end of album artist
-        try:
-            artist = '%s %s' % (tags['albumartist'], matcher.group('featuring'))
-        except KeyError:
-            log.warning("No albumartist tag:%s", full_path)
-            return update_data
-        # Use stripped title
-        title = matcher.group('title')
-        # Dont assume nothing in update_data key yet
-        update_data.setdefault(full_path, {})
-        update_data[full_path]['artist'] = artist
-        update_data[full_path]['title'] = title
+    matcher = re.match(FEAT_MATCH, title)
+
+    if not matcher:
+        log.warning("Unable to find matching regex for file:%s", full_path)
+        return update_data
+    # Combine featuring to end of album artist
+    try:
+        artist = '%s %s' % (tags['albumartist'], matcher.group('featuring'))
+    except KeyError:
+        log.warning("No albumartist tag:%s", full_path)
+        return update_data
+    # Use stripped title
+    title = matcher.group('title')
+    # Dont assume nothing in update_data key yet
+    update_data.setdefault(full_path, {})
+    update_data[full_path]['artist'] = artist
+    update_data[full_path]['title'] = title
 
     return update_data
 
