@@ -3,6 +3,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 import random
+import time
 
 HOME_DIRECTORY = os.path.expanduser('~')
 PICTURE_DIRECTORY = os.path.join(HOME_DIRECTORY, 'Pictures', 'Wallpapers')
@@ -50,11 +51,12 @@ def reset_files():
 
 def main():
     log = setup_logger()
-    file_name = reset_files()
-    # add condition to check if file doesnt exist
-    log.debug("Changing background to file name:%s", file_name)
-    os.system('gsettings set org.gnome.desktop.background picture-uri "file:///%s"' % file_name)
-    os.system('gsettings set org.gnome.desktop.screensaver picture-uri "file:///%s"' % file_name)
+    while True:
+        file_name = reset_files()
+        log.debug("Changing background to file name:%s", file_name)
+        os.system('gsettings set org.gnome.desktop.background picture-uri "file:///%s"' % file_name)
+        os.system('gsettings set org.gnome.desktop.screensaver picture-uri "file:///%s"' % file_name)
+        time.sleep(WAIT_INTERVAL)
 
 if __name__ == '__main__':
     main()
