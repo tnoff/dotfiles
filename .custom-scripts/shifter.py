@@ -31,17 +31,14 @@ def reset_files():
             files = reader.read().split('\n')
     except FileNotFoundError:
         files = []
-    # If no files left, reset picture file
-    if len(files) == 0:
-        files = os.listdir(PICTURE_DIRECTORY)
-        # Shuffle a couple of times before writing
-        for _ in range(len(files) * 2):
-            random.shuffle(files)
-
-    # Make sure file exists when getting it
     while True:
-        # Grab first file to return later
-        file_name = os.path.join(PICTURE_DIRECTORY, files.pop(0))
+        try:
+            file_name = os.path.join(PICTURE_DIRECTORY, files.pop(0))
+        except IndexError:
+            files = os.listdir(PICTURE_DIRECTORY)
+            # Shuffle a couple of times before writing
+            for _ in range(len(files) * 2):
+                random.shuffle(files)
         if os.path.isfile(file_name):
             break
     # Write rest of files to file for later
