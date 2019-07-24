@@ -126,8 +126,8 @@ def main():
 
     # Print out data fixes before continuing
     for path, new_tags in update_data.items():
-        print("Will attempt to edit tags on file:%s", path)
-        print("New tags\n:%s", json.dumps(new_tags, indent=4))
+        print("Will attempt to edit tags on file:", path)
+        print("New tags\n:", json.dumps(new_tags, indent=4))
 
     for tag, data_set in delete_tags.items():
         print("Will attempt to delete tag:%s from the following files" % tag)
