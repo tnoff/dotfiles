@@ -14,4 +14,5 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_python_checkers=['pylint']
 let g:syntastic_enable_highlighting = 1
 
+colors desert
 syntax on
