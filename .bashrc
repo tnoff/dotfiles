@@ -95,7 +95,7 @@ function envs()
             echo "Please input an environment name to create"
             return
         fi
-        virtualenv --no-site-packages ~/.envs/$2
+        virtualenv --no-site-packages --python=$(which python3) ~/.envs/$2
         source ~/.envs/$2/bin/activate
         return
     fi
