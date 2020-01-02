@@ -77,10 +77,6 @@ def check_featured_artists_in_title(log, update_data, full_path, tags):
         return update_data
 
     # Check for possible featuring files
-    if not ("feat." in title.lower() or "featuring" in title.lower() or "ft." in title.lower()):
-        log.debug("No featuring artist in title found for file:%s", title)
-        return update_data
-
     matcher = re.match(FEAT_MATCH, title)
 
     if not matcher:
