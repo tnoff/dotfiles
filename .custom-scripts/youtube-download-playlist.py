@@ -42,12 +42,9 @@ def main():
     output = path + '/' + '%(playlist_index)s-%(title)s.%(ext)s'
 
     ydl_opts = {
-        'format': 'bestaudio/best',
         'outtmpl' : output,
         'postprocessors' : [{
             'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
         }],
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
