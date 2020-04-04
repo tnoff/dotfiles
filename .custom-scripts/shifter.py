@@ -39,6 +39,7 @@ def reset_files():
             # Shuffle a couple of times before writing
             for _ in range(len(files) * 2):
                 random.shuffle(files)
+            continue
         if os.path.isfile(file_name):
             break
     # Write rest of files to file for later
