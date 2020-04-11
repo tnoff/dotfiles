@@ -117,6 +117,15 @@ function pretty-script()
     cat $1 | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b > $1-pretty
 }
 
+function docker-reset()
+{
+    docker stop $(docker ps | awk '!/CONTAINER/ {print $1}')
+    docker rm $(docker ps --all | awk '!/CONTAINER/ {print $1}')
+    docker image rm $(docker image ls | awk '!/IMAGE/ {print $3}')
+    docker volume rm $(docker volume ls | awk '!/VOLUME/ {print $2}')
+    docker system prune
+}
+
 # Source twilio stuff
 source ~/.twilio_env.sh
 
