@@ -15,3 +15,4 @@ let g:syntastic_python_checkers=['pylint']
 let g:syntastic_enable_highlighting = 1
 
 syntax on
+color desert
