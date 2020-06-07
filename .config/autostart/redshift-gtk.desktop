@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Exec=/usr/bin/python3 /usr/bin/redshift-gtk &
-Hidden=false
-X-GNOME=Autostart-enabled=true
-Name[en_US]=Redshift
-Name=Redshift
-Commen[en_US]=Redshift
-Comment=Redshift
