@@ -16,6 +16,7 @@ def parse_args():
     p.add_argument("--album", help="Album Name")
     p.add_argument("--date", help="Date")
     p.add_argument("--picture", help="Picture file to use")
+    p.add_argument("--items", help="Playlist items, comma seperated")
     return p.parse_args()
 
 def main():
@@ -47,6 +48,8 @@ def main():
             'key': 'FFmpegExtractAudio',
         }],
     }
+    if args.items:
+        ydl_opts['playlist_items'] = args.items
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([args.playlist])
 
