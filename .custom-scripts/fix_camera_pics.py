@@ -1,7 +1,3 @@
-#!/bin/bash
-
-#name=$(echo "$pic" | sed -r 's/^IMG_([0-9]{4})([0-9]{2})([0-9]{2})_([0-9]{2})([0-9]{2})([0-9]{2})(_HDR)?/\1\-\2\-\3\ \4\-\5\-\6/') 
-
 #!/usr/bin/env python
 
 from argparse import ArgumentParser
