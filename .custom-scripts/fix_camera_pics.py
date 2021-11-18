@@ -10,7 +10,7 @@ SUPPORTED_FILES = [
     '.mp4',
 ]
 
-FILE_NAME_REGEX = r'^(IMG_)?(?P<year>\d{4})(?P<month>\d{2})(?P<day>\d{2})_(?P<hour>\d{2})(?P<minute>\d{2})' \
+FILE_NAME_REGEX = r'^(IMG_|VID_)?(?P<year>\d{4})(?P<month>\d{2})(?P<day>\d{2})_(?P<hour>\d{2})(?P<minute>\d{2})' \
                   '(?P<second>\d{2})(?P<microsecond>\d{3})?(_MP)?(_HDR)?(_PORTRAIT)?(?P<suffix>.*)$'
 
 def parse_args():

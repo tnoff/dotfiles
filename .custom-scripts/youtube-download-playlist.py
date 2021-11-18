@@ -5,7 +5,7 @@ import os
 import re
 
 from hathor.audio import metadata
-import youtube_dl
+import yt_dlp
 
 EXPECTED_REGEX = "^0?(?P<number>[0-9A-Z]+)([ -])(?P<title>.*).mp3"
 
@@ -50,7 +50,7 @@ def main():
     }
     if args.items:
         ydl_opts['playlist_items'] = args.items
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([args.playlist])
 
 

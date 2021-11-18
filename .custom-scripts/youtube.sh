@@ -32,18 +32,18 @@ if [ "${MEDIA_TYPE}" != "v" ] && [ "${MEDIA_TYPE}" != "a" ]; then
 fi
 
 # download path will include name of the online video file, and then whatever extension
-# youtube-dl wants to use
+# yt-dlp wants to use
 DOWNLOAD_PATH="${DEFAULT_MEDIA_PATH}/%(title)s.%(ext)s"
 
 if [ "${MEDIA_TYPE}" == "a" ]; then
 
     # download best possible format, use "-x" flag for just audio
-    youtube-dl --audio-quality 0 -x -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
+    yt-dlp --audio-quality 0 -x -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
     exit 0
 fi
 
 if [ "${MEDIA_TYPE}" == "v" ]; then
-    youtube-dl -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
+    yt-dlp -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
     exit 0
 fi
 exit 1
