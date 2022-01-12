@@ -38,12 +38,12 @@ DOWNLOAD_PATH="${DEFAULT_MEDIA_PATH}/%(title)s.%(ext)s"
 if [ "${MEDIA_TYPE}" == "a" ]; then
 
     # download best possible format, use "-x" flag for just audio
-    yt-dlp --audio-quality 0 -x -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
+    yt-dlp -x -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
     exit 0
 fi
 
 if [ "${MEDIA_TYPE}" == "v" ]; then
-    yt-dlp -f best --audio-quality 0 -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
+    yt-dlp -o "${DOWNLOAD_PATH}" "${YOUTUBE_URL}"
     exit 0
 fi
 exit 1

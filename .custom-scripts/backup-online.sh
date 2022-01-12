@@ -2,10 +2,7 @@
 
 
 # Run backup actions
-backup-tool directory backup /home/tnorth/Documents/ --overwrite --skip-files ".*/Secrets.*"
-backup-tool directory backup /home/tnorth/Music/ --overwrite
-backup-tool directory backup /home/tnorth/Pictures/ --overwrite
-backup-tool directory backup /home/tnorth/Videos/ --overwrite
+backup-tool -w /home/tnorth/Downloads directory backup --overwrite --skip-files ".*/Documents/Secrets.*" /home/tnorth/Documents/ /home/tnorth/Music/ /home/tnorth/Pictures/ /home/tnorth/Videos/
 
 # Copy database over to backup tool
 cp /home/tnorth/.backup-tool/database.sql /home/tnorth/Documents/Secrets/Backup\ Tool/$(date +%Y-%m-%d).database.sql

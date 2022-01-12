@@ -126,8 +126,7 @@ function docker-reset()
     docker system prune
 }
 
-# Source twilio stuff
-source ~/.twilio_env.sh
+source ~/.secrets.sh
 
 # Set up venv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
