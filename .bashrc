@@ -130,4 +130,4 @@ source ~/.secrets.sh
 
 # Set up venv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-envs master
+envs main

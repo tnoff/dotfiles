@@ -3,11 +3,11 @@
 set -euf -o pipefail
 
 # Default File Locations
-LOCAL_ROOT="${HOME}"
-MUSIC_EXT="/Music/"
-VIDEO_EXT="/Videos/"
-DOCS_EXT="/Documents/"
-PICS_EXT="/Pictures/"
+LOCAL_ROOT="${HOME}/"
+MUSIC_EXT="Music/"
+VIDEO_EXT="Videos/"
+DOCS_EXT="Documents/"
+PICS_EXT="Pictures/"
 
 # Make sure user has specified destination output
 if [ -z "$1" ] ; then
@@ -21,10 +21,10 @@ LOG_FILE="/tmp/backup.log"
 destination=`echo "$1" | sed -r 's/\/$//'`
 
 # Backup commands
-docs_sync="rsync -rvcL ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete"
-music_sync="rsync -rvcL ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete"
-pic_sync="rsync -rvc ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete"
-video_sync="rsync -rvc ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
+docs_sync="rsync -rWvc ${LOCAL_ROOT}${DOCS_EXT} ${destination}${DOCS_EXT} --delete"
+music_sync="rsync -rWv ${LOCAL_ROOT}${MUSIC_EXT} ${destination}${MUSIC_EXT} --delete"
+pic_sync="rsync -rWv ${LOCAL_ROOT}${PICS_EXT} ${destination}${PICS_EXT} --delete"
+video_sync="rsync -rWv ${LOCAL_ROOT}${VIDEO_EXT} ${destination}${VIDEO_EXT} --delete"
 
 echo "Will run the following rysnc commands"
 echo "--------------------------------------------------------------------"
