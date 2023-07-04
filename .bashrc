@@ -128,6 +128,11 @@ function docker-reset()
 
 source ~/.secrets.sh
 
+
 # Set up venv
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 envs main
+
+# Call note script
+python ~/.custom-scripts/get_note_folder.py
+
