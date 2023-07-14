@@ -136,3 +136,5 @@ envs main
 # Call note script
 python ~/.custom-scripts/get_note_folder.py
 
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
