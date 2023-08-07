@@ -51,8 +51,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Custom prompt
-export PS1="\W>\[$(tput sgr0)\]"
-
+PS1='\W\\$'
 
 # Alias
 alias remove-trailing-whitespaces='echo ":%s/\s\+$//" | pbcopy'
