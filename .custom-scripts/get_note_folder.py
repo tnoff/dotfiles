@@ -10,7 +10,7 @@ HOME_PATH = Path(expanduser('~'))
 NOTE_FOLDER_DEFAULT = HOME_PATH / 'Notes'
 DATE_FORMAT = '%Y-%m-%d'
 
-NOTES_TEMPLATE = '# {today}\n\n## Stuff Completed\n\n## Mood Notes\n -Mood: ?/10\n-Day: ?/10\n-Mental Health: ?/10\n## TODOs/Followups\n'
+NOTES_TEMPLATE = '# {today}\n\n## Stuff Completed\n\n## Mood Notes\n\n- Mood: ?/10\n- Day: ?/10\n- Mental Health: ?/10\n\n## TODOs/Followups\n'
 
 def parse_args():
     parser = ArgumentParser(description='Create Note Folders')
