@@ -2,6 +2,7 @@
 
 from argparse import ArgumentParser
 from datetime import date, timedelta
+from os import environ
 from os.path import expanduser
 
 from pathlib import Path
@@ -20,6 +21,8 @@ def parse_args():
 def main():
     args = parse_args()
     note_path = Path(args.note_folder_path)
+    if not environ.get('ENABLE_NOTE_FOLDER', False):
+        return
 
     # Get start of current week and the end of the current week
     start_of_week = date.today()
