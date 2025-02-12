@@ -61,10 +61,6 @@ alias purge-pyc='find . -name "*.pyc" -exec rm -rf {} \;'
 alias purge-orig='find . -name "*.orig" -exec rm -rf {} \;'
 alias list-file-types='find . -type f | perl -ne '"'"'print $1 if m/\.([^.\/]+)$/'"'"' | sort -u'
 
-# Hathor Alias'
-alias hathor='hathor -s ~/.hathor/settings.conf'
-alias episode-list='hathor -k date,podcast,title -sk date episode list'
-
 # Add custom scripts to path
 PATH=${PATH}:~/.custom-scripts/
 export PATH
@@ -101,16 +97,6 @@ function envs()
     source ~/.envs/$1/bin/activate
 }
 
-function image-size()
-{
-    convert $1 -print "Size: %wx%h\n" /dev/null
-}
-
-function download-playlist()
-{
-    youtube-dl --audio-quality 0 -f best -x -o "%(playlist_index)s-%(title)s.%(ext)s" "$1"
-}
-
 function pretty-script()
 {
     cat $1 | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b > $1-pretty
@@ -134,14 +120,6 @@ envs main
 
 # Call note script
 python ~/.custom-scripts/get_note_folder.py
-
-
-if command -v rbenv &> /dev/null; then
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
-fi
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
