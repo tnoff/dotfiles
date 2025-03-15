@@ -2,7 +2,7 @@
 Name=Shifter Script
 GenericName=Wallpaper shifter
 Comment=Wallpaper shifter
-Exec=/home/tnorth/.envs/master/bin/python /home/tnorth/.custom-scripts/shifter.py &
+Exec=/home/tnorth/.envs/main/bin/python /home/tnorth/.custom-scripts/background_shifter.py &
 Terminal=false
 Type=Application
 X-GNOME-Autostart-enabled=true
