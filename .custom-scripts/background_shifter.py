@@ -49,9 +49,9 @@ def main():
             files = generate_file_list(picture_dir_path)
         file_path = files.pop(0)
         logger.info(f'Updating backgrounds to new file path {file_path}')
-        system(f'gsettings set org.gnome.desktop.background picture-uri-dark file://{file_path}')
-        system(f'gsettings set org.gnome.desktop.background picture-uri file://{file_path}')
-        system(f'gsettings set org.gnome.desktop.screensaver picture-uri file://{file_path}')
+        system(f"gsettings set org.gnome.desktop.background picture-uri-dark 'file://{file_path}'")
+        system(f"gsettings set org.gnome.desktop.background picture-uri 'file://{file_path}'")
+        system(f"gsettings set org.gnome.desktop.screensaver picture-uri 'file://{file_path}'")
         sleep(args.wait_interval)
 
 if __name__ == '__main__':
