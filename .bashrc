@@ -127,3 +127,10 @@ export NVM_DIR="$HOME/.nvm"
 
 # Tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"
+
+# Istio
+# https://medium.com/@sirtcp/revisiting-kubernetes-service-mesh-a-guide-to-istio-with-example-1499455d7ccd
+export PATH=$HOME/.istio-1.25.0/bin/:$PATH
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
